@@ -1,5 +1,11 @@
+import restik.Deserializer;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hi!");
+        var list = Deserializer.Deserialize("/Users/dashbah/Desktop/repo/Restoran/RESTik/src/main/resources/cookers.json");
+        assert list != null;
+        for (var data : list) {
+            System.out.println(data.toString());
+        }
     }
 }
