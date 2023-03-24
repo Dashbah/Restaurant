@@ -1,6 +1,7 @@
 package restik;
 import com.google.gson.Gson;
-import restik.model.Cooker;
+import restik.model.Cookers;
+
 import java.io.FileReader;
 
 public class Deserializer {
@@ -15,7 +16,7 @@ public class Deserializer {
             Gson gson = new Gson();
 
             // преобразуем JSON данные в объект класса Data
-            cookers = gson.fromJson(reader, Cooker[].class);
+            cookers = gson.fromJson(reader, Cookers.Cooker[].class);
 
             // закрываем файл
             reader.close();
