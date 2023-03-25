@@ -3,15 +3,14 @@ package restik.model;
 import java.sql.Time;
 import java.util.List;
 
-public class VisitorOrders {
-    private class VisitorOrder {
+public class VisitorOrder {
         private String vis_name;
-        private Time vis_ord_started;
-        private Time vis_ord_ended;
+        private String vis_ord_started;
+        private String vis_ord_ended;
         private int vis_ord_total;
 
         // ????
-        List<MenuDishes.MenuDish> vis_ord_dishes;
+        List<MenuDish> vis_ord_dishes;
 
         public VisitorOrder() {
         }
@@ -21,7 +20,4 @@ public class VisitorOrders {
             return vis_name + " " + vis_ord_started + " " + vis_ord_ended
                     + " " + vis_ord_total + " " + vis_ord_dishes ;
         }
-    }
-
-    List<VisitorOrder> visitors_orders;
 }

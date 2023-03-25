@@ -1,13 +1,12 @@
 package restik;
 import com.google.gson.Gson;
-import restik.model.Cookers;
 
 import java.io.FileReader;
 
 public class Deserializer {
 
-    public static Object[] Deserialize(String filePath) {
-        Object[] cookers;
+    public static <T> T[] Deserialize(String filePath, Class<T[]> clazz) {
+        T[] objects;
         try {
             // открываем файл для чтения
             FileReader reader = new FileReader(filePath);
@@ -16,12 +15,12 @@ public class Deserializer {
             Gson gson = new Gson();
 
             // преобразуем JSON данные в объект класса Data
-            cookers = gson.fromJson(reader, Cookers.Cooker[].class);
+            objects = gson.fromJson(reader, clazz);
 
             // закрываем файл
             reader.close();
 
-            return cookers;
+            return objects;
         } catch (Exception ex) {
             ex.printStackTrace();
         }

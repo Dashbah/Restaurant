@@ -2,6 +2,7 @@ package restik.model;
 
 import java.util.List;
 
+// recept
 public class EquipmentType {
 
     private class EqType {
