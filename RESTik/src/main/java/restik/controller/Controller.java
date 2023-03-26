@@ -6,14 +6,11 @@ import restik.model.Process;
 import restik.view.TabloGotovnosty;
 import restik.view.Terminal;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Controller {
     List<Cooker> cookers;
-    List<MenuDish> menuDishes;
+    Map<Integer, MenuDish> menuDishes;
     Map<Integer, DishCard> dishCards;
     List<Equipment> equipment;
     List<EquipmentType> equipmentTypes;
@@ -30,11 +27,13 @@ public class Controller {
         terminal = new Terminal(menuDishes);
         for (var visitorsOrder : visitorsOrders) {
             List<DishCard> dishCardsOrdered = new ArrayList<>();
-            for (Integer dishId : visitorsOrder.getVisOrdDishesCardId()) {
-                dishCardsOrdered.add(dishCards.get(dishId));
+            var a = visitorsOrder.getVisOrdMenuDishesId();
+            for (Integer menuDishId : a) {
+                dishCardsOrdered.add(dishCards.get(menuDishes.get(menuDishId).getMenu_dish_card()));
             }
 
             AgentOrder agentOrder = new AgentOrder(dishCardsOrdered);
+            agentOrders = new ArrayList<>();
             agentOrders.add(agentOrder);
             TabloGotovnosty.displayReadyTime(visitorsOrder.getVisName(), agentOrder.countMinTime());
 
@@ -68,6 +67,7 @@ public class Controller {
 
         var dishCardsList = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/dish_cards.json",
                 DishCard[].class)));
+        dishCards = new HashMap<>();
         for (var dishCard : dishCardsList) {
             dishCards.put(dishCard.getCardId(), dishCard);
         }
@@ -76,8 +76,14 @@ public class Controller {
                 Equipment[].class)));
         equipmentTypes = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/equipment_type.json",
                 EquipmentType[].class)));
-        menuDishes = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/menu_dishes.json",
+
+        var menuDishesList = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/menu_dishes.json",
                 MenuDish[].class)));
+        menuDishes = new HashMap<>();
+        for (var menuDish : menuDishesList) {
+            menuDishes.put(menuDish.getMenu_dish_id(), menuDish);
+        }
+
         operationTypes = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/operation_types.json",
                 OperationType[].class)));
         productTypes = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/product_types.json",

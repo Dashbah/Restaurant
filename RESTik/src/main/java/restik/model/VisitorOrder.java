@@ -10,16 +10,16 @@ public class VisitorOrder {
     private int vis_ord_total;
 
     // ????
-    List<MenuDish> vis_ord_dishes;
+    List<OrderDishes> vis_ord_dishes;
 
     public String getVisName() {
         return vis_name;
     }
 
-    public List<Integer> getVisOrdDishesCardId() {
+    public List<Integer> getVisOrdMenuDishesId() {
         List<Integer> menuDishList = new ArrayList<>();
         for (var visOrdDish : vis_ord_dishes) {
-            menuDishList.add(visOrdDish.getMenu_dish_id());
+            menuDishList.add(visOrdDish.getMenu_dish());
         }
         return menuDishList;
     }

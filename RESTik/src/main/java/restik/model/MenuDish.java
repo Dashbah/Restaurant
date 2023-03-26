@@ -10,6 +10,10 @@ public class MenuDish {
         return menu_dish_id;
     }
 
+    public int getMenu_dish_card() {
+        return menu_dish_card;
+    }
+
     public MenuDish() {
     }
 

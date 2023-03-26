@@ -4,14 +4,15 @@ import restik.model.MenuDish;
 import restik.model.OrderDishes;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Terminal {
     Scanner input = new Scanner(System.in);
 
-    List<MenuDish> menuDishes;
+    Map<Integer, MenuDish> menuDishes;
 
-    public Terminal(List<MenuDish> menuDishes) {
+    public Terminal(Map<Integer, MenuDish> menuDishes) {
         this.menuDishes = menuDishes;
         display();
     }
