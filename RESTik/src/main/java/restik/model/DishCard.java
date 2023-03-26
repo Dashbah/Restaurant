@@ -18,6 +18,17 @@ public class DishCard {
     private int equip_type = 0;
     List<Operation> operations;
 
+    public int getCardId() {
+        return card_id;
+    }
+
+    public double getCard_time() {
+        return card_time;
+    }
+
+    public List<Operation> getOperations() {
+        return operations;
+    }
 
     public DishCard() {
     }

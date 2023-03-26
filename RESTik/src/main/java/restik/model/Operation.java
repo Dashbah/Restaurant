@@ -10,6 +10,9 @@ public class Operation {
 
     List<Product1> products;
 
+    public int getOper_type() {
+        return oper_type;
+    }
 
     public Operation() {
     }

@@ -10,4 +10,14 @@ public class Process {
     private Time proc_ended;
     private boolean proc_active;
     List<Process> proc_operations;
+
+    public Process(VisitorOrder visitorOrder) {
+
+    }
+
+    public void activate() {
+        // code
+        // Thread.sleep(200);
+        // select products and so on;
+    }
 }
