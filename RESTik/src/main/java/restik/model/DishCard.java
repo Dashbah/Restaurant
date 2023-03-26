@@ -22,6 +22,10 @@ public class DishCard {
         return card_id;
     }
 
+    public String getDish_name() {
+        return dish_name;
+    }
+
     public double getCard_time() {
         return card_time;
     }

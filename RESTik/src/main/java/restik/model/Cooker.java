@@ -14,6 +14,6 @@ public class Cooker {
 
     @Override
     public String toString() {
-        return cook_id + " " + cook_name + " " + cook_active;
+        return cook_id + " " + cook_name;
     }
 }

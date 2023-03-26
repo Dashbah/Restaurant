@@ -42,10 +42,11 @@ public class Controller {
             // dish <-> operation
             for (var dish : agentOrder.getVis_ord_dishes()) {
                 // new Thread();
-                for (var operation : dish.getOperations()) {
-                    new Thread(new Cookers.ProcessThread(operation)).start();
-                    Thread.sleep(400);
-                }
+                new Thread(new Cookers.DishThread(dish)).start();
+                Thread.sleep(400);
+//                for (var operation : dish.getOperations()) {
+//
+//                }
             }
 
             //            var process = new Process(visitorsOrder);
