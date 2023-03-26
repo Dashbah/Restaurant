@@ -25,19 +25,21 @@ public class Controller {
     public Controller() throws InterruptedException {
         readJsons();
         terminal = new Terminal(menuDishes);
+
+        agentOrders = new ArrayList<>();
         for (var visitorsOrder : visitorsOrders) {
             List<DishCard> dishCardsOrdered = new ArrayList<>();
-            var a = visitorsOrder.getVisOrdMenuDishesId();
-            for (Integer menuDishId : a) {
+            for (Integer menuDishId : visitorsOrder.getVisOrdMenuDishesId()) {
                 dishCardsOrdered.add(dishCards.get(menuDishes.get(menuDishId).getMenu_dish_card()));
             }
 
             AgentOrder agentOrder = new AgentOrder(dishCardsOrdered);
-            agentOrders = new ArrayList<>();
             agentOrders.add(agentOrder);
             TabloGotovnosty.displayReadyTime(visitorsOrder.getVisName(), agentOrder.countMinTime());
 
+            new Cookers(cookers.size(), cookers);
             // Cooker currentCooker;
+            // dish <-> operation
             for (var dish : agentOrder.getVis_ord_dishes()) {
                 // new Thread();
                 for (var operation : dish.getOperations()) {
@@ -53,14 +55,6 @@ public class Controller {
         }
     }
 
-    // Cookers.Cooker selectCooker() {
-//        for (var cooker : cookers) {
-//            if (!cooker.isCook_active()) {
-//                cooker.setCook_active(true);
-//                currentCooker = cooker;
-//            }
-//        }
-   //  }
     void readJsons() {
         cookers = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/cookers.json",
                 Cooker[].class)));

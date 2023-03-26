@@ -10,7 +10,7 @@ public class Cookers {
     private static List<Cooker> cookers;
     private static Semaphore SEMAPHORE;
 
-    Cookers(Integer numOfCookers1, List<Cooker> cookers1) {
+    public Cookers(Integer numOfCookers1, List<Cooker> cookers1) {
         numOfCookers = numOfCookers1;
         COOKERS_IF_ACTIVE = new boolean[numOfCookers];
         SEMAPHORE = new Semaphore(numOfCookers, true);
