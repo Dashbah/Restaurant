@@ -14,8 +14,6 @@ public class DishCard {
     private String card_descr = "";
     private double card_time = 0;
 
-    // Equipment eq = new Equipment();
-    // private int equip_type = eq.getEquip_type();
     private int equip_type = 0;
     List<Operation> operations;
 
@@ -39,18 +37,11 @@ public class DishCard {
         return operations;
     }
 
-    public List<Product1> getRequiredProducts() {
-        List<Product1> product1s = new ArrayList<>();
+    public List<ProductCard> getRequiredProducts() {
+        List<ProductCard> product1s = new ArrayList<>();
         for (var operation : operations) {
             product1s.addAll(operation.getRequiredProducts());
         }
         return product1s;
-    }
-    public DishCard() {
-    }
-
-    @Override
-    public String toString() {
-        return card_id + " " + dish_name + " " + card_descr + " " + card_time + " " + equip_type + " " + operations;
     }
 }

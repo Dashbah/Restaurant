@@ -24,7 +24,6 @@ public class Deserializer {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        // throw ex???
         return null;
     }
 }

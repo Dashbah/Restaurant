@@ -1,6 +1,6 @@
 package restik.model;
 
-public class Product1 {
+public class ProductCard {
     int prod_type = 0;
     double prod_quantity = 0;
 

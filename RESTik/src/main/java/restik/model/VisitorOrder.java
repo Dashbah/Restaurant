@@ -9,7 +9,6 @@ public class VisitorOrder {
     private String vis_ord_ended;
     private int vis_ord_total;
 
-    // ????
     List<OrderDishes> vis_ord_dishes;
 
     public String getVisName() {

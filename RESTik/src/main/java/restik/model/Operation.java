@@ -1,6 +1,5 @@
 package restik.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Operation {
@@ -8,22 +7,17 @@ public class Operation {
     private double oper_time = 0;
     private int oper_async_point = 0;
 
-    List<Product1> oper_products;
-
-    public int getOper_type() {
-        return oper_type;
-    }
+    List<ProductCard> oper_products;
 
     public Operation() {
     }
 
-    public List<Product1> getRequiredProducts() {
+    public List<ProductCard> getRequiredProducts() {
         return oper_products;
     }
 
     void activate() throws InterruptedException {
-        Thread.sleep((long) oper_time * 100);
-        // wait((long) oper_time * 100);
+        Thread.sleep((long) oper_time * 1000);
     }
 
     @Override

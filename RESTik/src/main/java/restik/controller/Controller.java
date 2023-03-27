@@ -18,16 +18,13 @@ public class Controller {
     List<ProductType> productTypes;
     Map<Integer, Product> products;
     List<VisitorOrder> visitorsOrders;
-    // List<AgentOrder> agentOrders;
-    List<Process> processes;
     Terminal terminal;
 
-    public Controller() throws InterruptedException {
+    public Controller(){
         readJsons();
         terminal = new Terminal(menuDishes, dishCards);
         System.out.println(terminal);
 
-        // agentOrders = new ArrayList<>();
         for (var visitorsOrder : visitorsOrders) {
            new Thread(new CookOrder(visitorsOrder)).start();
         }
@@ -56,8 +53,6 @@ public class Controller {
             for (var dish : agentOrder.getVis_ord_dishes()) {
                 new Thread(new Kitchen.DishThread(dish)).start();
             }
-            // waiting for the next client
-            // Thread.sleep(200);
         }
     }
 

@@ -27,14 +27,8 @@ public class Product {
         return prod_item_type;
     }
 
-    public double getProd_item_quantity() {
-        return prod_item_quantity;
-    }
-
     public void take(double quantity) {
         prod_item_quantity -= quantity;
-        // if prod_item_quantity < 0
-        // throw exception: not enough
     }
 
     @Override

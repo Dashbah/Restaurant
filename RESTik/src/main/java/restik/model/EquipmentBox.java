@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EquipmentBox {
-    // Integer equipmentType;
     final Object lock = new Object();
     List<Equipment> equipmentList = new ArrayList<>();
     Integer counter = 0;
@@ -16,13 +15,6 @@ public class EquipmentBox {
         // check a lot of
         equipmentList.add(equipment);
         ++counter;
-    }
-    public void get(Equipment equipment) {
-        // check a lot of
-        if (counter != 0) {
-            equipmentList.remove(equipment);
-            --counter;
-        }
     }
 
     Equipment take() throws InterruptedException {
@@ -39,18 +31,8 @@ public class EquipmentBox {
 
     void put() {
         synchronized (lock) {
-//                //Пока буфер полный, ждем
-//                while (count == buffer.length) {
-//                    lock.wait();
-//                }
             //"Добавляем" значение в буфер и увеличиваем счетчик.
             ++counter;
-            // eqBox.add(equipment);
-            // buffer[count++] = value;
-            // System.out.println("Produced " + value);
-            //Уведомляем другой поток, что можно продолжать работу.
-
-            // System.out.println(equipment.getEquip_name() + "was put");
             System.out.println("equipment was put");
             lock.notifyAll();
         }

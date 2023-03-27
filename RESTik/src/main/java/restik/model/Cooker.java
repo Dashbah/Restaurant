@@ -8,10 +8,6 @@ public class Cooker {
     public Cooker() {
     }
 
-    public int getCookId() {
-        return cook_id;
-    }
-
     @Override
     public String toString() {
         return cook_id + " " + cook_name;

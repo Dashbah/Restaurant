@@ -20,11 +20,9 @@ public class Kitchen {
     }
 
     public static class DishThread implements Runnable {
-        // static int numOfDishes = 0;
         private final DishCard dishCard;
 
         public DishThread(DishCard process) {
-            // ++numOfDishes;
             this.dishCard = process;
         }
 
@@ -40,29 +38,29 @@ public class Kitchen {
                         if (!COOKERS_IF_ACTIVE[i]) {
                             COOKERS_IF_ACTIVE[i] = true;
                             cookerNumber = i;         //Наличие свободного места, гарантирует семафор
-
                             break;
                         }
                 }
 
                 System.out.println("Блюдо " + dishCard.getDish_name() + " выполняется поваром " +
-                        cookers.get(cookerNumber));
+                        cookers.get(cookerNumber).toString());
+
                 Cook();
 
-                Thread.sleep(5000);
-
                 synchronized (COOKERS_IF_ACTIVE) {
-                    COOKERS_IF_ACTIVE[cookerNumber] = false;//Освобождаем место
+                    COOKERS_IF_ACTIVE[cookerNumber] = false; // Освобождаем место
                 }
 
                 SEMAPHORE.release();
                 System.out.println("Блюдо " + dishCard.getDish_name() + " приготовлено поваром " +
-                        cookers.get(cookerNumber));
+                        cookers.get(cookerNumber).toString());
             } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
 
         void Cook() throws InterruptedException {
+            // Thread.sleep(2000);
             var eqBox = equipmentMap.get(dishCard.getEquip_type());
 
             Equipment equipment = eqBox.take();

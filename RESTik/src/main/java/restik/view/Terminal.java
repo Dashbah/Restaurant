@@ -24,10 +24,8 @@ public class Terminal {
         for (MenuDish menuDish : menuDishes.values()) {
             DishCard dishCard = dishCards.get(menuDish.getMenu_dish_card());
             result += dishCard.getDish_name() + "\n";
-            // System.out.println(dishCard.getDish_name() + "\n");
         }
         result += "----------";
-        // System.out.println("----------");
         return result;
     }
 
