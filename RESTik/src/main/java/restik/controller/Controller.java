@@ -12,7 +12,6 @@ public class Controller {
     List<Cooker> cookers;
     Map<Integer, MenuDish> menuDishes;
     Map<Integer, DishCard> dishCards;
-    // List<Equipment> equipment;
     Map<Integer, EquipmentBox> equipmentMap;
     List<EquipmentType> equipmentTypes;
     List<OperationType> operationTypes;
@@ -30,13 +29,23 @@ public class Controller {
 
         // agentOrders = new ArrayList<>();
         for (var visitorsOrder : visitorsOrders) {
+           new Thread(new CookOrder(visitorsOrder)).start();
+        }
+    }
+
+    class CookOrder implements Runnable {
+        VisitorOrder visitorsOrder;
+        CookOrder(VisitorOrder visitorsOrder) {
+            this.visitorsOrder = visitorsOrder;
+        }
+        @Override
+        public void run() {
             List<DishCard> dishCardsOrdered = new ArrayList<>();
             for (Integer menuDishId : visitorsOrder.getVisOrdMenuDishesId()) {
                 dishCardsOrdered.add(dishCards.get(menuDishes.get(menuDishId).getMenu_dish_card()));
             }
 
             AgentOrder agentOrder = new AgentOrder(dishCardsOrdered);
-            // agentOrders.add(agentOrder);
 
             reserveProducts(dishCardsOrdered);
 
@@ -46,7 +55,6 @@ public class Controller {
 
             for (var dish : agentOrder.getVis_ord_dishes()) {
                 new Thread(new Kitchen.DishThread(dish)).start();
-                Thread.sleep(100);
             }
             // waiting for the next client
             // Thread.sleep(200);
