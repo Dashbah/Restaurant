@@ -29,83 +29,44 @@
 
 ```
 {
-
-`   `"dish\_cards":[
-
-`      `{
-
-`         `"card\_id":518,
-
-`         `"dish\_name":"Princess Nuri tea bag in a paper cup",
-
-`         `"card\_descr":"pouring boiled water into a paper cup + 2 bags of sugar",
-
-`         `"card\_time":0.15,
-
-`         `"equip\_type":25,
-
-`         `"operations":[
-
-`            `{
-
-`               `"oper\_type":17,
-
-`               `"oper\_time":0.15,
-
-`               `"oper\_async\_point":0,
-
-`               `"oper\_products":[
-
-`                  `{
-
-`                     `"prod\_type":18,
-
-`                     `"prod\_quantity":1
-
-`                  `},
-
-`                  `{
-
-`                     `"prod\_type":23,
-
-`                     `"prod\_quantity":2
-
-`                  `},
-
-`                  `{
-
-`                     `"prod\_type":24,
-
-`                     `"prod\_quantity":0.2
-
-`                  `},
-
-`                  `{
-
-`                     `"prod\_type":12,
-
-`                     `"prod\_quantity":1
-
-`                  `},
-
-`                  `{
-
-`                     `"prod\_type":19,
-
-`                     `"prod\_quantity":1
-
-`                  `}
-
-`               `]
-
-`            `}
-
-`         `]
-
-`      `}
-
-`   `]
-
+  "dish_cards":[
+     {
+        "card_id":518,
+        "dish_name":"Princess Nuri tea bag in a paper cup",
+        "card_descr":"pouring boiled water into a paper cup + 2 bags of sugar",
+        "card_time":0.15,
+        "equip_type":25,
+        "operations":[
+           {
+              "oper_type":17,
+              "oper_time":0.15,
+              "oper_async_point":0,
+              "oper_products":[
+                 {
+                    "prod_type":18,
+                    "prod_quantity":1
+                 },
+                 {
+                    "prod_type":23,
+                    "prod_quantity":2
+                 },
+                 {
+                    "prod_type":24,
+                    "prod_quantity":0.2
+                 },
+                 {
+                    "prod_type":12,
+                    "prod_quantity":1
+                 },
+                 {
+                    "prod_type":19,
+                    "prod_quantity":1
+                 }
+              ]
+           }
+        ]
+     }
+  ]
 }
 ```
 
@@ -114,83 +75,46 @@
 
 **Отредактированный JSON:**
 
-
+```
 [
-
-`  `{
-
-`    `"card\_id": 518,
-
-`    `"dish\_name": "Princess Nuri tea bag in a paper cup",
-
-`    `"card\_descr": "pouring boiled water into a paper cup + 2 bags of sugar",
-
-`    `"card\_time": 0.15,
-
-`    `"equip\_type": 25,
-
-`    `"operations": [
-
-`      `{
-
-`        `"oper\_type": 17,
-
-`        `"oper\_time": 0.15,
-
-`        `"oper\_async\_point": 0,
-
-`        `"oper\_products": [
-
-`          `{
-
-`            `"prod\_type": 18,
-
-`            `"prod\_quantity": 1
-
-`          `},
-
-`          `{
-
-`            `"prod\_type": 23,
-
-`            `"prod\_quantity": 2
-
-`          `},
-
-`          `{
-
-`            `"prod\_type": 24,
-
-`            `"prod\_quantity": 0.2
-
-`          `},
-
-`          `{
-
-`            `"prod\_type": 12,
-
-`            `"prod\_quantity": 1
-
-`          `},
-
-`          `{
-
-`            `"prod\_type": 19,
-
-`            `"prod\_quantity": 1
-
-`          `}
-
-`        `]
-
-`      `}
-
-`    `]
-
-`  `}
-
+ {
+   "card_id": 518,
+   "dish_name": "Princess Nuri tea bag in a paper cup",
+   "card_descr": "pouring boiled water into a paper cup + 2 bags of sugar",
+   "card_time": 0.15,
+   "equip_type": 25,
+   "operations": [
+     {
+       "oper_type": 17,
+       "oper_time": 0.15,
+       "oper_async_point": 0,
+       "oper_products": [
+         {
+           "prod_type": 18,
+           "prod_quantity": 1
+         },
+         {
+           "prod_type": 23,
+           "prod_quantity": 2
+         },
+         {
+           "prod_type": 24,
+           "prod_quantity": 0.2
+         },
+         {
+           "prod_type": 12,
+           "prod_quantity": 1
+         },
+         {
+           "prod_type": 19,
+           "prod_quantity": 1
+         }
+       ]
+     }
+   ]
+ }
 ]
-
+```
 
 
 
@@ -231,5 +155,6 @@
 
 **Результат работы.**
 
+![image](https://user-images.githubusercontent.com/90968766/228002654-78c90b74-70f0-4920-9d7b-e4065ed7349f.png)
 
 
