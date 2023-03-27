@@ -21,7 +21,7 @@ public class AgentOrder {
     public Integer countMinTime() {
         int totalTime = 0;
         for (var dishCard: vis_ord_dishes) {
-            totalTime += 1;
+            totalTime += dishCard.getCard_time();
             // totalTime += dishCard.getCard_time();
         }
         return totalTime;

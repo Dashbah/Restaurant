@@ -13,6 +13,10 @@ public class Equipment {
         return equip_type;
     }
 
+    public String getEquip_name() {
+        return equip_name;
+    }
+
     @Override
     public String toString() {
         return equip_type + " " + equip_name + " " + equip_active;

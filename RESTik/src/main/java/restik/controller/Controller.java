@@ -12,11 +12,12 @@ public class Controller {
     List<Cooker> cookers;
     Map<Integer, MenuDish> menuDishes;
     Map<Integer, DishCard> dishCards;
-    List<Equipment> equipment;
+    // List<Equipment> equipment;
+    Map<Integer, EquipmentBox> equipmentMap;
     List<EquipmentType> equipmentTypes;
     List<OperationType> operationTypes;
     List<ProductType> productTypes;
-    List<Product> products;
+    Map<Integer, Product> products;
     List<VisitorOrder> visitorsOrders;
     List<AgentOrder> agentOrders;
     List<Process> processes;
@@ -35,24 +36,26 @@ public class Controller {
 
             AgentOrder agentOrder = new AgentOrder(dishCardsOrdered);
             agentOrders.add(agentOrder);
+
+            reserveProducts(dishCardsOrdered);
+
             TabloGotovnosty.displayReadyTime(visitorsOrder.getVisName(), agentOrder.countMinTime());
 
-            new Cookers(cookers.size(), cookers);
-            // Cooker currentCooker;
-            // dish <-> operation
-            for (var dish : agentOrder.getVis_ord_dishes()) {
-                // new Thread();
-                new Thread(new Cookers.DishThread(dish)).start();
-                Thread.sleep(400);
-//                for (var operation : dish.getOperations()) {
-//
-//                }
-            }
+            new Kitchen(cookers.size(), cookers, equipmentMap);
 
-            //            var process = new Process(visitorsOrder);
-            //            processes.add(process);
-            // process.work(visitorsOrder);
-            // reserve
+            for (var dish : agentOrder.getVis_ord_dishes()) {
+                new Thread(new Kitchen.DishThread(dish)).start();
+                Thread.sleep(400);
+            }
+        }
+    }
+
+    private void reserveProducts(List<DishCard> dishCards) {
+        for (var dishCard : dishCards) {
+            for (var product : dishCard.getRequiredProducts()) {
+                // products.get(product.getProd_type()).num -= //
+                products.get(product.getProd_type()).take(product.getProd_quantity());
+            }
         }
     }
 
@@ -67,8 +70,17 @@ public class Controller {
             dishCards.put(dishCard.getCardId(), dishCard);
         }
 
-        equipment = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/equipment.json",
+        var equipmentList = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/equipment.json",
                 Equipment[].class)));
+        equipmentMap = new HashMap<>();
+        for (var eq : equipmentList) {
+            if (equipmentMap.containsKey(eq.getEquip_type())) {
+                equipmentMap.get(eq.getEquip_type()).add(eq);
+            } else {
+                equipmentMap.put(eq.getEquip_type(), new EquipmentBox(eq));
+            }
+        }
+
         equipmentTypes = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/equipment_type.json",
                 EquipmentType[].class)));
 
@@ -83,8 +95,14 @@ public class Controller {
                 OperationType[].class)));
         productTypes = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/product_types.json",
                 ProductType[].class)));
-        products = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/products.json",
+
+        var productsList =List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/products.json",
                 Product[].class)));
+        products = new HashMap<>();
+        for (var product : productsList) {
+            products.put(product.getProd_item_type(), product);
+        }
+
         visitorsOrders = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/visitors_orders.json",
                 VisitorOrder[].class)));
     }

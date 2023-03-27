@@ -1,5 +1,6 @@
 package restik.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,6 +27,10 @@ public class DishCard {
         return dish_name;
     }
 
+    public int getEquip_type() {
+        return equip_type;
+    }
+
     public double getCard_time() {
         return card_time;
     }
@@ -34,6 +39,13 @@ public class DishCard {
         return operations;
     }
 
+    public List<Product1> getRequiredProducts() {
+        List<Product1> product1s = new ArrayList<>();
+        for (var operation : operations) {
+            product1s.addAll(operation.getRequiredProducts());
+        }
+        return product1s;
+    }
     public DishCard() {
     }
 
