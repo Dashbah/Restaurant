@@ -21,15 +21,9 @@ public class Operation {
         return oper_products;
     }
 
-    //    public double getProductsIds() {
-//        List<Integer> productsId = new ArrayList<>();
-//        for (var product : products) {
-//            productsId.add(product.prod_type);
-//        }
-//    }
-
     void activate() throws InterruptedException {
-        wait((long) oper_time * 100);
+        Thread.sleep((long) oper_time * 100);
+        // wait((long) oper_time * 100);
     }
 
     @Override

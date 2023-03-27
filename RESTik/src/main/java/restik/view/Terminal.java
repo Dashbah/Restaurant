@@ -1,5 +1,6 @@
 package restik.view;
 
+import restik.model.DishCard;
 import restik.model.MenuDish;
 
 import java.util.Map;
@@ -9,33 +10,25 @@ public class Terminal {
     Scanner input = new Scanner(System.in);
 
     Map<Integer, MenuDish> menuDishes;
+    Map<Integer, DishCard> dishCards;
 
-    public Terminal(Map<Integer, MenuDish> menuDishes) {
+    public Terminal(Map<Integer, MenuDish> menuDishes, Map<Integer, DishCard> dishCards) {
         this.menuDishes = menuDishes;
-        display();
+        this.dishCards = dishCards;
     }
 
-    private void display() {
-        System.out.println(menuDishes);
+    @Override
+    public String toString() {
+        String result = "";
+        result += "Menu:\n";
+        for (MenuDish menuDish : menuDishes.values()) {
+            DishCard dishCard = dishCards.get(menuDish.getMenu_dish_card());
+            result += dishCard.getDish_name() + "\n";
+            // System.out.println(dishCard.getDish_name() + "\n");
+        }
+        result += "----------";
+        // System.out.println("----------");
+        return result;
     }
 
-    void getOrderFromVisitor() {
-        // hello my name is
-        // what do you want
-        // читаем с консольки
-        // ! в конце
-//        var line = input.nextLine();
-//        List<OrderDishes>
-//        while (!line.startsWith("!")) {
-//
-//        }
-    }
-
-
-
-    public void foo() {
-
-    }
-
-    // private
 }

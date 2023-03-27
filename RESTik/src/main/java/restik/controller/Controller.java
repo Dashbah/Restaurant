@@ -19,15 +19,16 @@ public class Controller {
     List<ProductType> productTypes;
     Map<Integer, Product> products;
     List<VisitorOrder> visitorsOrders;
-    List<AgentOrder> agentOrders;
+    // List<AgentOrder> agentOrders;
     List<Process> processes;
     Terminal terminal;
 
     public Controller() throws InterruptedException {
         readJsons();
-        terminal = new Terminal(menuDishes);
+        terminal = new Terminal(menuDishes, dishCards);
+        System.out.println(terminal);
 
-        agentOrders = new ArrayList<>();
+        // agentOrders = new ArrayList<>();
         for (var visitorsOrder : visitorsOrders) {
             List<DishCard> dishCardsOrdered = new ArrayList<>();
             for (Integer menuDishId : visitorsOrder.getVisOrdMenuDishesId()) {
@@ -35,7 +36,7 @@ public class Controller {
             }
 
             AgentOrder agentOrder = new AgentOrder(dishCardsOrdered);
-            agentOrders.add(agentOrder);
+            // agentOrders.add(agentOrder);
 
             reserveProducts(dishCardsOrdered);
 
@@ -45,15 +46,21 @@ public class Controller {
 
             for (var dish : agentOrder.getVis_ord_dishes()) {
                 new Thread(new Kitchen.DishThread(dish)).start();
-                Thread.sleep(400);
+                Thread.sleep(100);
             }
+            // waiting for the next client
+            // Thread.sleep(200);
         }
     }
 
     private void reserveProducts(List<DishCard> dishCards) {
         for (var dishCard : dishCards) {
             for (var product : dishCard.getRequiredProducts()) {
-                // products.get(product.getProd_type()).num -= //
+                /*
+                  if here we have an exception -> it means we don't have enough products
+                   so -> if there is 0 products -> delete it from the menu
+                   if less than 0 -> something strange happened -> delete the order
+                 */
                 products.get(product.getProd_type()).take(product.getProd_quantity());
             }
         }
