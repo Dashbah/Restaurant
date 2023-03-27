@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
 
+/**
+ * Класс, представляющий кухню, где готовят блюда.
+ */
 public class Kitchen {
     private static int numOfCookers = 0;
     private static boolean[] COOKERS_IF_ACTIVE;
@@ -11,6 +14,13 @@ public class Kitchen {
     private static Map<Integer, EquipmentBox> equipmentMap;
     private static Semaphore SEMAPHORE;
 
+    /**
+     * Конструктор, инициализирующий объект Kitchen.
+     * Списком поваров и картой оборудования.
+     * @param numOfCookers1 количество поваров на кухне
+     * @param cookers1 список поваров, работающих на кухне
+     * @param equipmentMap1 мапа, содержащая оборудование на кухне
+     */
     public Kitchen(Integer numOfCookers1, List<Cooker> cookers1, Map<Integer, EquipmentBox> equipmentMap1) {
         numOfCookers = numOfCookers1;
         COOKERS_IF_ACTIVE = new boolean[numOfCookers];
@@ -19,6 +29,9 @@ public class Kitchen {
         equipmentMap = equipmentMap1;
     }
 
+    /**
+     * Внутренний класс, представляющий поток готовки блюда.
+     */
     public static class DishThread implements Runnable {
         private final DishCard dishCard;
 
@@ -59,6 +72,10 @@ public class Kitchen {
             }
         }
 
+        /**
+         * Выполняет готовку блюда, используя оборудование, соответствующее типу блюда.
+         * @throws InterruptedException если выполнение потока было прервано.
+         */
         void Cook() throws InterruptedException {
             // Thread.sleep(2000);
             var eqBox = equipmentMap.get(dishCard.getEquip_type());

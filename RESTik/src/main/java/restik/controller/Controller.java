@@ -8,6 +8,9 @@ import restik.view.Terminal;
 
 import java.util.*;
 
+/**
+ * Контроллер приложения. Управляет работой системы обслуживания ресторана.
+ */
 public class Controller {
     List<Cooker> cookers;
     Map<Integer, MenuDish> menuDishes;
@@ -20,6 +23,10 @@ public class Controller {
     List<VisitorOrder> visitorsOrders;
     Terminal terminal;
 
+
+    /**
+     * Конструктор класса Controller. Считывает JSON-файлы и создает объект терминала.
+     */
     public Controller(){
         readJsons();
         terminal = new Terminal(menuDishes, dishCards);
@@ -30,11 +37,22 @@ public class Controller {
         }
     }
 
+    /**
+     * Внутренний класс CookOrder, представляющий собой поток для обработки заказа покупателя.
+     */
     class CookOrder implements Runnable {
         VisitorOrder visitorsOrder;
+        /**
+         * Конструктор класса CookOrder.
+         *
+         * @param visitorsOrder заказ посетителя.
+         */
         CookOrder(VisitorOrder visitorsOrder) {
             this.visitorsOrder = visitorsOrder;
         }
+        /**
+         * Запускает выполнение потока.
+         */
         @Override
         public void run() {
             List<DishCard> dishCardsOrdered = new ArrayList<>();
@@ -56,6 +74,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Резервирует продукты, необходимые для приготовления блюд из списка заказа.
+     *
+     * @param dishCards список карточек блюд заказа.
+     */
     private void reserveProducts(List<DishCard> dishCards) {
         for (var dishCard : dishCards) {
             for (var product : dishCard.getRequiredProducts()) {
@@ -69,6 +92,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Считывает JSON-файлы и инициализирует поля класса.
+     */
     void readJsons() {
         cookers = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/cookers.json",
                 Cooker[].class)));
