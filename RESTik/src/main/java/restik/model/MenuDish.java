@@ -1,17 +1,23 @@
 package restik.model;
 
-public class MenuDish {
-    private int menu_dish_id = 0;
-    private int menu_dish_card = 0;
-    private int menu_dish_price = 0;
-    private boolean menu_dish_active = false;
+import com.google.gson.annotations.SerializedName;
 
-    public int getMenu_dish_id() {
-        return menu_dish_id;
+public class MenuDish {
+    @SerializedName("menu_dish_id")
+    private int menuDishId = 0;
+    @SerializedName("menu_dish_card")
+    private int menuDishCard = 0;
+    @SerializedName("menu_dish_price")
+    private int menuDishPrice = 0;
+    @SerializedName("menu_dish_active")
+    private boolean menuDishActive = false;
+
+    public int getMenuDishId() {
+        return menuDishId;
     }
 
-    public int getMenu_dish_card() {
-        return menu_dish_card;
+    public int getMenuDishCard() {
+        return menuDishCard;
     }
 
     public MenuDish() {
@@ -19,6 +25,6 @@ public class MenuDish {
 
     @Override
     public String toString() {
-        return menu_dish_id + " " + menu_dish_card + " " + menu_dish_price + " " + menu_dish_active;
+        return menuDishId + " " + menuDishCard + " " + menuDishPrice + " " + menuDishActive;
     }
 }

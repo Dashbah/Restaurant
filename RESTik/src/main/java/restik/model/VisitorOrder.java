@@ -1,24 +1,30 @@
 package restik.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class VisitorOrder {
-    private String vis_name;
-    private String vis_ord_started;
-    private String vis_ord_ended;
-    private int vis_ord_total;
-
-    List<OrderDishes> vis_ord_dishes;
+    @SerializedName("vis_name")
+    private String visName;
+    @SerializedName("vis_ord_started")
+    private String visOrdStarted;
+    @SerializedName("vis_ord_ended")
+    private String visOrdEnded;
+    @SerializedName("vis_ord_total")
+    private int visOrdTotal;
+    @SerializedName("vis_ord_dishes")
+    private List<OrderDishes> visOrdDishes;
 
     public String getVisName() {
-        return vis_name;
+        return visName;
     }
 
     public List<Integer> getVisOrdMenuDishesId() {
         List<Integer> menuDishList = new ArrayList<>();
-        for (var visOrdDish : vis_ord_dishes) {
-            menuDishList.add(visOrdDish.getMenu_dish());
+        for (var visOrdDish : visOrdDishes) {
+            menuDishList.add(visOrdDish.getMenuDish());
         }
         return menuDishList;
     }
@@ -28,7 +34,7 @@ public class VisitorOrder {
 
     @Override
     public String toString() {
-        return vis_name + " " + vis_ord_started + " " + vis_ord_ended
-                + " " + vis_ord_total + " " + vis_ord_dishes;
+        return visName + " " + visOrdStarted + " " + visOrdEnded
+                + " " + visOrdTotal + " " + visOrdDishes;
     }
 }

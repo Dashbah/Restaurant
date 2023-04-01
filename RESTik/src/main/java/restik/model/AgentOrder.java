@@ -2,39 +2,24 @@ package restik.model;
 
 import java.util.List;
 
-/**
- *
- * Класс агента заказа.
- *
- */
 public class AgentOrder {
+    private final List<DishCard> visOrdDishes;
 
-    /**
-     * Список {@link DishCard}, представляющий блюда в заказе.
-     */
-    List<DishCard> vis_ord_dishes;
-
-    public List<DishCard> getVis_ord_dishes() {
-        return vis_ord_dishes;
+    public List<DishCard> getVisOrdDishes() {
+        return visOrdDishes;
     }
-    /**
-     * Конструктор класса.
-     *
-     * @param menuDishOrdered список {@link DishCard}, представляющий блюда в заказе.
-     */
+
     public AgentOrder(List<DishCard> menuDishOrdered) {
-        vis_ord_dishes = menuDishOrdered;
+        visOrdDishes = menuDishOrdered;
     }
 
     /**
-     * Вычисляет минимальное время приготовления всех блюд в заказе.
-     *
-     * @return время приготовления всех блюд в заказе.
+     * @return минимальное время приготовления всех блюд в заказе
      */
     public double countMinTime() {
         double totalTime = 0;
-        for (var dishCard: vis_ord_dishes) {
-            totalTime += dishCard.getCard_time();
+        for (var dishCard: visOrdDishes) {
+            totalTime += dishCard.getCardTime();
         }
         return totalTime;
     }

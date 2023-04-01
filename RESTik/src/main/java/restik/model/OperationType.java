@@ -1,14 +1,18 @@
 package restik.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class OperationType {
-    private int oper_type_id = 0;
-    private String oper_type_name = "";
+    @SerializedName("oper_type_id")
+    private int operTypeId = 0;
+    @SerializedName("oper_type_name")
+    private String operTypeName = "";
 
     public OperationType() {
     }
 
     @Override
     public String toString() {
-        return oper_type_id + " " + oper_type_name;
+        return operTypeId + " " + operTypeName;
     }
 }

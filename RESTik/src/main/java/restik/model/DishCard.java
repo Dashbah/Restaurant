@@ -1,36 +1,40 @@
 package restik.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
-
-// recept
 public class DishCard {
+    @SerializedName("card_id")
+    private int cardId = 0;
+    @SerializedName("dish_name")
+    private String dishName = "";
 
-    private int card_id = 0;
+    @SerializedName("card_descr")
+    private String cardDescr = "";
+    @SerializedName("card_time")
+    private double cardTime = 0;
+    @SerializedName("equip_type")
+    private int equipType = 0;
 
-    private String dish_name = "";
-
-    private String card_descr = "";
-    private double card_time = 0;
-
-    private int equip_type = 0;
-    List<Operation> operations;
+    @SerializedName("operations")
+    private List<Operation> operations = new ArrayList<>();
 
     public int getCardId() {
-        return card_id;
+        return cardId;
     }
 
-    public String getDish_name() {
-        return dish_name;
+    public String getDishName() {
+        return dishName;
     }
 
-    public int getEquip_type() {
-        return equip_type;
+    public int getEquipType() {
+        return equipType;
     }
 
-    public double getCard_time() {
-        return card_time;
+    public double getCardTime() {
+        return cardTime;
     }
 
     public List<Operation> getOperations() {

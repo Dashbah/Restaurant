@@ -1,17 +1,22 @@
 package restik.model;
 
 
-public class Equipment {
-    private int equip_type = 0;
-    private String equip_name = "";
-    private boolean equip_active = false;
+import com.google.gson.annotations.SerializedName;
 
-    public int getEquip_type() {
-        return equip_type;
+public class Equipment {
+    @SerializedName("equip_type")
+    private int equipType = 0;
+    @SerializedName("equip_name")
+    private String equipName = "";
+    @SerializedName("equip_active")
+    private boolean equipActive = false;
+
+    public int getEquipType() {
+        return equipType;
     }
 
-    public String getEquip_name() {
-        return equip_name;
+    public String getEquipName() {
+        return equipName;
     }
 }
 

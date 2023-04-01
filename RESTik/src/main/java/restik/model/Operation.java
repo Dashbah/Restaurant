@@ -1,27 +1,32 @@
 package restik.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Operation {
-    private int oper_type = 0;
-    private double oper_time = 0;
-    private int oper_async_point = 0;
-
-    List<ProductCard> oper_products;
+    @SerializedName("oper_type")
+    private int operationType = 0;
+    @SerializedName("oper_time")
+    private double operTime = 0;
+    @SerializedName("oper_async_point")
+    private int operAsyncPoint = 0;
+    @SerializedName("oper_products")
+    private List<ProductCard> operProducts;
 
     public Operation() {
     }
 
     public List<ProductCard> getRequiredProducts() {
-        return oper_products;
+        return operProducts;
     }
 
     void activate() throws InterruptedException {
-        Thread.sleep((long) oper_time * 1000);
+        Thread.sleep((long) operTime * 1000);
     }
 
     @Override
     public String toString() {
-        return oper_type + " " + oper_time + " " + oper_async_point + " " + oper_products;
+        return operationType + " " + operTime + " " + operAsyncPoint + " " + operProducts;
     }
 }

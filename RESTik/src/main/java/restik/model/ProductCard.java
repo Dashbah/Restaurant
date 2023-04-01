@@ -1,14 +1,18 @@
 package restik.model;
 
-public class ProductCard {
-    int prod_type = 0;
-    double prod_quantity = 0;
+import com.google.gson.annotations.SerializedName;
 
-    public int getProd_type() {
-        return prod_type;
+public class ProductCard {
+    @SerializedName("prod_type")
+    private int prodType = 0;
+    @SerializedName("prod_quantity")
+    private double prodQuantity = 0;
+
+    public int getProdType() {
+        return prodType;
     }
 
-    public double getProd_quantity() {
-        return prod_quantity;
+    public double getProdQuantity() {
+        return prodQuantity;
     }
 }

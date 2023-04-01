@@ -1,9 +1,10 @@
 package restik.model;
 
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
-// recept
 public class EquipmentType {
-    private final int equip_type_id = 0;
-    private final String equip_type_name = "";
+    @SerializedName("equip_type_id")
+    private final int equipTypeId = 0;
+    @SerializedName("equip_type_name")
+    private final String equipTypeName = "";
 }

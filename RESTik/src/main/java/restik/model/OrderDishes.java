@@ -1,10 +1,14 @@
 package restik.model;
 
-public class OrderDishes {
-    private int ord_dish_id;
-    private int menu_dish;
+import com.google.gson.annotations.SerializedName;
 
-    public int getMenu_dish() {
-        return menu_dish;
+public class OrderDishes {
+    @SerializedName("ord_dish_id")
+    private int ordDishId;
+    @SerializedName("menu_dish")
+    private int menuDish;
+
+    public int getMenuDish() {
+        return menuDish;
     }
 }

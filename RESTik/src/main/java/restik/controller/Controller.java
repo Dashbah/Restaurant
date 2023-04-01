@@ -2,16 +2,19 @@ package restik.controller;
 
 import restik.Deserializer;
 import restik.model.*;
-import restik.model.Process;
 import restik.view.TabloGotovnosty;
 import restik.view.Terminal;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 /**
  * Контроллер приложения. Управляет работой системы обслуживания ресторана.
  */
 public class Controller {
+    private static Logger log = Logger.getLogger(Controller.class.getName());
     List<Cooker> cookers;
     Map<Integer, MenuDish> menuDishes;
     Map<Integer, DishCard> dishCards;
@@ -23,17 +26,32 @@ public class Controller {
     List<VisitorOrder> visitorsOrders;
     Terminal terminal;
 
-
     /**
      * Конструктор класса Controller. Считывает JSON-файлы и создает объект терминала.
      */
-    public Controller(){
-        readJsons();
+    public Controller() {
+        try {
+            FileHandler fh = new FileHandler("fileRestik.log");
+            log.addHandler(fh);
+        } catch (IOException e) {
+            log.info("error while creating log file" + e.getMessage());
+        }
+
+        try {
+            readJsons();
+        } catch (IOException e) {
+            log.info("can't read JSONs \n" + e.getMessage());
+            return;
+        } catch (Exception ex) {
+            log.info("Error while downloading data \n" + ex.getMessage());
+            return;
+        }
+
         terminal = new Terminal(menuDishes, dishCards);
         System.out.println(terminal);
 
         for (var visitorsOrder : visitorsOrders) {
-           new Thread(new CookOrder(visitorsOrder)).start();
+            new Thread(new CookOrder(visitorsOrder)).start();
         }
     }
 
@@ -42,22 +60,16 @@ public class Controller {
      */
     class CookOrder implements Runnable {
         VisitorOrder visitorsOrder;
-        /**
-         * Конструктор класса CookOrder.
-         *
-         * @param visitorsOrder заказ посетителя.
-         */
+
         CookOrder(VisitorOrder visitorsOrder) {
             this.visitorsOrder = visitorsOrder;
         }
-        /**
-         * Запускает выполнение потока.
-         */
+
         @Override
         public void run() {
             List<DishCard> dishCardsOrdered = new ArrayList<>();
             for (Integer menuDishId : visitorsOrder.getVisOrdMenuDishesId()) {
-                dishCardsOrdered.add(dishCards.get(menuDishes.get(menuDishId).getMenu_dish_card()));
+                dishCardsOrdered.add(dishCards.get(menuDishes.get(menuDishId).getMenuDishCard()));
             }
 
             AgentOrder agentOrder = new AgentOrder(dishCardsOrdered);
@@ -66,19 +78,18 @@ public class Controller {
 
             TabloGotovnosty.displayReadyTime(visitorsOrder.getVisName(), agentOrder.countMinTime());
 
-            new Kitchen(cookers.size(), cookers, equipmentMap);
+            try {
+                new Kitchen(cookers.size(), cookers, equipmentMap);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-            for (var dish : agentOrder.getVis_ord_dishes()) {
+            for (var dish : agentOrder.getVisOrdDishes()) {
                 new Thread(new Kitchen.DishThread(dish)).start();
             }
         }
     }
 
-    /**
-     * Резервирует продукты, необходимые для приготовления блюд из списка заказа.
-     *
-     * @param dishCards список карточек блюд заказа.
-     */
     private void reserveProducts(List<DishCard> dishCards) {
         for (var dishCard : dishCards) {
             for (var product : dishCard.getRequiredProducts()) {
@@ -87,59 +98,69 @@ public class Controller {
                    so -> if there is 0 products -> delete it from the menu
                    if less than 0 -> something strange happened -> delete the order
                  */
-                products.get(product.getProd_type()).take(product.getProd_quantity());
+                products.get(product.getProdType()).take(product.getProdQuantity());
             }
         }
     }
 
-    /**
-     * Считывает JSON-файлы и инициализирует поля класса.
-     */
-    void readJsons() {
-        cookers = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/cookers.json",
+    void readJsons() throws IOException {
+        var resourceStream = getClass().getClassLoader().getResourceAsStream("input/cookers.json");
+        var resourceStreamDishCards = getClass().getClassLoader().getResourceAsStream("input/dish_cards.json");
+        var resourceStreamEquipment = getClass().getClassLoader().getResourceAsStream("input/equipment.json");
+        var resourceStreamEquipmentType = getClass().getClassLoader().getResourceAsStream("input/equipment_type.json");
+        var resourceStreamMenuDishes = getClass().getClassLoader().getResourceAsStream("input/menu_dishes.json");
+        var resourceStreamOperationTypes = getClass().getClassLoader().getResourceAsStream("input/operation_types.json");
+        var resourceStreamProductTypes = getClass().getClassLoader().getResourceAsStream("input/product_types.json");
+        var resourceStreamProducts = getClass().getClassLoader().getResourceAsStream("input/products.json");
+        var resourceStreamVisitorsOrders = getClass().getClassLoader().getResourceAsStream("input/visitors_orders.json");
+
+        cookers = List.of(Objects.requireNonNull(Deserializer.Deserialize(resourceStream,
                 Cooker[].class)));
 
-        var dishCardsList = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/dish_cards.json",
+        var dishCardsList = List.of(Objects.requireNonNull(Deserializer.Deserialize(
+                resourceStreamDishCards,
                 DishCard[].class)));
         dishCards = new HashMap<>();
         for (var dishCard : dishCardsList) {
             dishCards.put(dishCard.getCardId(), dishCard);
         }
 
-        var equipmentList = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/equipment.json",
+        var equipmentList = List.of(Objects.requireNonNull(Deserializer.Deserialize(
+                resourceStreamEquipment,
                 Equipment[].class)));
         equipmentMap = new HashMap<>();
         for (var eq : equipmentList) {
-            if (equipmentMap.containsKey(eq.getEquip_type())) {
-                equipmentMap.get(eq.getEquip_type()).add(eq);
+            if (equipmentMap.containsKey(eq.getEquipType())) {
+                equipmentMap.get(eq.getEquipType()).add(eq);
             } else {
-                equipmentMap.put(eq.getEquip_type(), new EquipmentBox(eq));
+                equipmentMap.put(eq.getEquipType(), new EquipmentBox(eq));
             }
         }
 
-        equipmentTypes = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/equipment_type.json",
+        equipmentTypes = List.of(Objects.requireNonNull(Deserializer.Deserialize(resourceStreamEquipmentType,
                 EquipmentType[].class)));
 
-        var menuDishesList = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/menu_dishes.json",
-                MenuDish[].class)));
+        var menuDishesList = List.of(Objects.requireNonNull(Deserializer.Deserialize(
+                resourceStreamMenuDishes, MenuDish[].class)));
         menuDishes = new HashMap<>();
         for (var menuDish : menuDishesList) {
-            menuDishes.put(menuDish.getMenu_dish_id(), menuDish);
+            menuDishes.put(menuDish.getMenuDishId(), menuDish);
         }
 
-        operationTypes = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/operation_types.json",
+        operationTypes = List.of(Objects.requireNonNull(Deserializer.Deserialize(resourceStreamOperationTypes,
                 OperationType[].class)));
-        productTypes = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/product_types.json",
+
+        productTypes = List.of(Objects.requireNonNull(Deserializer.Deserialize(resourceStreamProductTypes,
                 ProductType[].class)));
 
-        var productsList =List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/products.json",
+        var productsList = List.of(Objects.requireNonNull(Deserializer.Deserialize(resourceStreamProducts,
                 Product[].class)));
         products = new HashMap<>();
         for (var product : productsList) {
-            products.put(product.getProd_item_type(), product);
+            products.put(product.getProdItemType(), product);
         }
 
-        visitorsOrders = List.of(Objects.requireNonNull(Deserializer.Deserialize("src/main/resources/input/visitors_orders.json",
+        visitorsOrders = List.of(Objects.requireNonNull(Deserializer.Deserialize(resourceStreamVisitorsOrders,
                 VisitorOrder[].class)));
     }
 }
